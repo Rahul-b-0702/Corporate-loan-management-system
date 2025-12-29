@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class Loan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
     private Double loanAmount;
     private Double interestRate;
@@ -26,6 +26,6 @@ public class Loan {
     private Customer customerId; //FK
     
     @ManyToOne
-    @JoinColumn(name="load_type")
-    private LoanType loanTyepId; //FK
+    @JoinColumn(name="loan_type")
+    private LoanType loanTypeId; //FK
 }

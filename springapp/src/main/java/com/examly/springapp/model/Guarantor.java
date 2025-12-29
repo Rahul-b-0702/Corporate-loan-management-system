@@ -11,7 +11,7 @@ import lombok.Data;
 @Entity
 public class Guarantor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long GuarantorId;
     private String GuarantorName;
     private String email;

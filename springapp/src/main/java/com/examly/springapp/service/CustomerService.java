@@ -8,11 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.examly.springapp.exception.ResourceNotFoundException;
 import com.examly.springapp.model.Customer;
 import com.examly.springapp.repository.CustomerRepo;
 
 @Service
-public class CustomerService {
+public class CustomerService implements ICustomerService {
   
     @Autowired
     private CustomerRepo customerRepo;
@@ -22,7 +23,9 @@ public class CustomerService {
     }
     
     public Customer getCustomerById(Long customerId){
-        return customerRepo.findById(customerId).orElse(null);
+        return customerRepo.findById(customerId).orElseThrow(() -> new ResourceNotFoundException(
+            "Customer not found with id: " + customerId
+        ));
     }
 
     public Customer getCustomerByEmail(String email){
@@ -37,17 +40,15 @@ public class CustomerService {
     }
     
     public Customer putCustomer(Long customerId,Customer c){
-        Customer existing=customerRepo.findById(customerId).orElse(null);
-        if(existing==null){
-            return null;
-        }else{
-            existing.setCustomerName(c.getCustomerName());
-            existing.setEmail(c.getEmail());
-            existing.setPhoneNumber(c.getPhoneNumber());
-            existing.setAddress(c.getAddress());
-            existing.setCreditScore(c.getCreditScore());
-            return customerRepo.save(existing);
-        }
+        Customer existing=customerRepo.findById(customerId).orElseThrow(() -> new ResourceNotFoundException(
+            "Customer not found with id: " + customerId
+        ));
+        existing.setCustomerName(c.getCustomerName());
+        existing.setEmail(c.getEmail());
+        existing.setPhoneNumber(c.getPhoneNumber());
+        existing.setAddress(c.getAddress());
+        existing.setCreditScore(c.getCreditScore());
+        return customerRepo.save(existing);
     }
     
     public void deleteCustomer(Long customerId){
@@ -58,5 +59,5 @@ public class CustomerService {
         Pageable pageable=PageRequest.of(page,size);
         return customerRepo.findAll(pageable);
     } 
-
+    
 }

@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
     private Double amount;
     private String paymentDate;

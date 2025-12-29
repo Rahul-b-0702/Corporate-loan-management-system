@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class LoanType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanTypeId;
     private String typeName;
     private String description;
